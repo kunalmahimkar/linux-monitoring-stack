@@ -142,12 +142,11 @@ The Grafana dashboard (`dashboard2`) has two panels:
 | **RAM Available** | `node_memory_MemAvailable_bytes` |
 | **CPU Usage %** | `100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)` |
 
-> Add a screenshot of your live dashboard to `screenshots/` and reference it here —
-> a visual is the single biggest thing a reviewer notices.
-> ![Dashboard](screenshots/dashboard.png)
+Screenshots:
 
-  ![CPU alert firing](screenshots/alert-firing.png)
+![Dashboard](screenshots/dashboard.png)
 
+![CPU alert firing](screenshots/alert-firing.png)
 ---
 
 ## Alerting
