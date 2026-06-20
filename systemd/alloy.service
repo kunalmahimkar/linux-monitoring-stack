@@ -11,3 +11,4 @@ ExecStart=/usr/local/bin/alloy run /etc/alloy/config.alloy --storage.path=/var/ 
 
 [Install]
 WantedBy=multi-user.target
+
