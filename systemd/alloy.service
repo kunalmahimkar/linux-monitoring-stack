@@ -1,0 +1,26 @@
+[Unit]
+Description=Grafana Alloy Metrics Collector
+Documentation=https://grafana.com/docs/alloy/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=alloy
+Group=alloy
+Restart=on-failure
+RestartSec=5
+
+# --server.http.listen-addr=0.0.0.0:12345 is important: by default Alloy binds its
+# HTTP/UI server to 127.0.0.1, which means the diagnostics UI is unreachable from the
+# host machine. Binding to 0.0.0.0 (and opening 12345 in firewalld) exposes the UI.
+ExecStart=/usr/local/bin/alloy run /etc/alloy/config.alloy \
+  --server.http.listen-addr=0.0.0.0:12345 \
+  --storage.path=/var/lib/alloy/data
+
+NoNewPrivileges=true
+ProtectHome=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

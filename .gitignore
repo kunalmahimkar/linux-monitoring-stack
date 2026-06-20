@@ -1,0 +1,23 @@
+# Service state / data
+data/
+*.db
+grafana.db
+*.wal
+
+# Logs
+*.log
+
+# Secrets / TLS
+*.key
+*.pem
+*.crt
+.env
+*.secret
+
+# Grafana instance state (never commit)
+configs/grafana/grafana.ini
+configs/grafana/custom.ini
+
+# OS / editor
+.DS_Store
+*.swp

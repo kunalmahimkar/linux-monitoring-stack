@@ -1,0 +1,24 @@
+[Unit]
+Description=Grafana
+Documentation=https://grafana.com/docs/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=grafana
+Group=grafana
+Restart=on-failure
+RestartSec=5
+
+# Grafana installed from the standalone binary archive depends on its FULL extracted
+# directory: it needs WorkingDirectory + --homepath pointing at /usr/local/grafana so it
+# can find conf/, public/, and its plugins. Pointing only at the binary will fail to
+# start with template / static-asset errors.
+WorkingDirectory=/usr/local/grafana
+ExecStart=/usr/local/grafana/bin/grafana server \
+  --config=/usr/local/grafana/conf/defaults.ini \
+  --homepath=/usr/local/grafana
+
+[Install]
+WantedBy=multi-user.target

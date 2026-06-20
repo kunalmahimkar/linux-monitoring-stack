@@ -1,0 +1,16 @@
+# Prometheus configuration
+#
+# Note: the HOST metrics (CPU, RAM, disk) do NOT arrive via a scrape_config here.
+# They are PUSHED in by Grafana Alloy through remote_write (see configs/alloy/config.alloy
+# and the --web.enable-remote-write-receiver flag in systemd/prometheus.service).
+#
+# The only scrape target below is Prometheus monitoring itself.
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
