@@ -13,3 +13,4 @@ ExecStart=/usr/local/grafana/bin/grafana server --config=/usr/local/grafana/con 
 [Install]
 WantedBy=multi-user.target
 
+
