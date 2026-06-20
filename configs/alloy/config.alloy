@@ -1,27 +1,12 @@
-// Grafana Alloy configuration
-//
-// Pipeline:
-//   prometheus.exporter.unix  ->  prometheus.scrape  ->  prometheus.remote_write
-//
-//   1. exporter.unix    generates host (node) metrics: CPU, memory, disk, filesystem...
-//   2. scrape           collects those metrics on an interval
-//   3. remote_write     pushes them to Prometheus' /api/v1/write endpoint
-
-// 1. Collect host metrics (equivalent to the standalone node_exporter)
-prometheus.exporter.unix "node" {
+prometheus.exporter.unix "system" {
 }
 
-// 2. Scrape the exporter and forward to remote_write
-prometheus.scrape "node" {
-  targets         = prometheus.exporter.unix.node.targets
-  forward_to      = [prometheus.remote_write.default.receiver]
-  scrape_interval = "15s"
-  job_name        = "node"
+prometheus.scrape "system_metrics" {
+  targets    = prometheus.exporter.unix.system.targets
+  forward_to = [prometheus.remote_write.local.receiver]
 }
 
-// 3. Push to Prometheus. The path /api/v1/write requires Prometheus to be started with
-//    --web.enable-remote-write-receiver (see systemd/prometheus.service).
-prometheus.remote_write "default" {
+prometheus.remote_write "local" {
   endpoint {
     url = "http://localhost:9090/api/v1/write"
   }
