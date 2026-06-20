@@ -1,31 +1,18 @@
 [Unit]
-Description=Prometheus Time Series Database
-Documentation=https://prometheus.io/docs/
+Description=Prometheus
 Wants=network-online.target
 After=network-online.target
 
 [Service]
-Type=simple
 User=prometheus
 Group=prometheus
-Restart=on-failure
-RestartSec=5
-
-# --web.enable-remote-write-receiver is REQUIRED so that Grafana Alloy can push
-# metrics into Prometheus via remote_write (POST to /api/v1/write).
-# Without it, Alloy's remote_write endpoint gets a 404 and no data lands.
+Type=simple
 ExecStart=/usr/local/bin/prometheus \
   --config.file=/etc/prometheus/prometheus.yml \
   --storage.tsdb.path=/var/lib/prometheus/ \
   --web.console.templates=/etc/prometheus/consoles \
-  --web.console.libraries=/etc/prometheus/console_libraries \
-  --web.listen-address=0.0.0.0:9090 \
+  --web.console.libraries=/etc/prometheus/console_libraries\
   --web.enable-remote-write-receiver
-
-# Basic hardening
-NoNewPrivileges=true
-ProtectHome=true
-ProtectSystem=full
 
 [Install]
 WantedBy=multi-user.target
